@@ -1,3 +1,8 @@
+<?php 
+  if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+  }
+?>
 <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
   <div class="container-fluid">
     <a class="navbar-brand" href="/websys/BCNHS/">BCNHS</a>
@@ -40,7 +45,13 @@
           <a class="nav-link" href="/websys/BCNHS/admin/">Manage Site</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/websys/BCNHS/login.php">Login</a>
+          <?php 
+            if (isset($_SESSION['user_id'])) {
+              echo '<a class="nav-link" href="/websys/BCNHS/logout.php">Logout</a>';
+            } else {
+              echo '<a class="nav-link" href="/websys/BCNHS/login.php">Login</a>';
+            }
+          ?>
         </li>
       </ul>
     </div>

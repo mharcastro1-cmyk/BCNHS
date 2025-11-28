@@ -1,3 +1,12 @@
+<?php
+session_start();
+
+// Role-based access control
+if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['admin', 'staff'])) {
+    header('Location: ../login.php');
+    exit;
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -98,29 +107,29 @@
             <section class="dashboard-section">
                 <h2 class="section-title">Quick Actions</h2>
                 <div class="actions-grid">
-                    <a href="#" class="action-btn">
+                    <a href="users.php" class="action-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 5v14M5 12h14"></path>
                         </svg>
                         <span>Add Student</span>
                     </a>
-                    <a href="#" class="action-btn">
+                    <a href="events.php" class="action-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 5v14M5 12h14"></path>
                         </svg>
                         <span>Create Event</span>
                     </a>
-                    <a href="#" class="action-btn">
+                    <a href="articles.php" class="action-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 5v14M5 12h14"></path>
                         </svg>
-                        <span>Post Announcement</span>
+                        <span>Post Article</span>
                     </a>
-                    <a href="#" class="action-btn">
+                    <a href="services.php" class="action-btn">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M12 5v14M5 12h14"></path>
                         </svg>
-                        <span>Generate Report</span>
+                        <span>Add Service</span>
                     </a>
                 </div>
             </section>

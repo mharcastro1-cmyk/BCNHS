@@ -220,6 +220,59 @@ class EventsModule {
     }
 }
 
+// ===================== USERS TABLE =====================
+class UsersModule {
+    private $pdo;
+
+    public function __construct() {
+        $db = new Database();
+        $this->pdo = $db->getPDO();
+    }
+
+    public function fetchUsers() {
+        $fetch = $this->pdo->query("SELECT * FROM users");
+        return $fetch->fetchAll();
+    }
+
+    public function getUser($id) {
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+        return $stmt->fetch();
+    }
+
+    public function getUserByEmail($email) {
+        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = :email");
+        $stmt->execute([':email' => $email]);
+        return $stmt->fetch();
+    }
+
+    public function createUser($name, $email, $password, $role) {
+        $stmt = $this->pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)");
+        $stmt->execute([
+            ':name' => $name,
+            ':email' => $email,
+            ':password' => $password,
+            ':role' => $role,
+        ]);
+    }
+
+    public function updateUser(int $id, $name, $email, $password, $role) {
+        $stmt = $this->pdo->prepare("UPDATE users SET name = :name, email = :email, password = :password, role = :role WHERE id = :id");
+        $stmt->execute([
+            ':name' => $name,
+            ':email' => $email,
+            ':password' => $password,
+            ':role' => $role,
+            ':id' => $id,
+        ]);
+    }
+
+    public function deleteUser(int $id) {
+        $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
+        $stmt->execute([':id' => $id]);
+    }
+}
+
 // ===================== FACULTY TABLE =====================
 class FacultyModule {
     private $pdo;
@@ -447,59 +500,6 @@ class ServicesModule {
 
     public function deleteService(int $id) {
         $stmt = $this->pdo->prepare("DELETE FROM services WHERE id = :id");
-        $stmt->execute([':id' => $id]);
-    }
-}
-
-// ===================== USERS TABLE =====================
-class UsersModule {
-    private $pdo;
-
-    public function __construct() {
-        $db = new Database();
-        $this->pdo = $db->getPDO();
-    }
-
-    public function fetchUsers() {
-        $fetch = $this->pdo->query("SELECT * FROM users");
-        return $fetch->fetchAll();
-    }
-
-    public function getUser($id) {
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE id = :id");
-        $stmt->execute([':id' => $id]);
-        return $stmt->fetch();
-    }
-
-    public function getUserByEmail($email) {
-        $stmt = $this->pdo->prepare("SELECT * FROM users WHERE email = :email");
-        $stmt->execute([':email' => $email]);
-        return $stmt->fetch();
-    }
-
-    public function createUser($name, $email, $password, $role) {
-        $stmt = $this->pdo->prepare("INSERT INTO users (name, email, password, role) VALUES (:name, :email, :password, :role)");
-        $stmt->execute([
-            ':name' => $name,
-            ':email' => $email,
-            ':password' => $password,
-            ':role' => $role,
-        ]);
-    }
-
-    public function updateUser(int $id, $name, $email, $password, $role) {
-        $stmt = $this->pdo->prepare("UPDATE users SET name = :name, email = :email, password = :password, role = :role WHERE id = :id");
-        $stmt->execute([
-            ':name' => $name,
-            ':email' => $email,
-            ':password' => $password,
-            ':role' => $role,
-            ':id' => $id,
-        ]);
-    }
-
-    public function deleteUser(int $id) {
-        $stmt = $this->pdo->prepare("DELETE FROM users WHERE id = :id");
         $stmt->execute([':id' => $id]);
     }
 }

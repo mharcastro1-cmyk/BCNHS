@@ -1,3 +1,41 @@
+<?php
+session_start();
+require_once 'functions/functions.php';
+
+$error_message = '';
+
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $usersModule = new UsersModule();
+    $user = $usersModule->getUserByEmail($email);
+
+    if ($user && password_verify($password, $user['password'])) {
+        $_SESSION['user_id'] = $user['id'];
+        $_SESSION['user_name'] = $user['name'];
+        $_SESSION['user_role'] = $user['role'];
+
+        switch ($user['role']) {
+            case 'admin':
+                header('Location: admin/index.php');
+                exit;
+            case 'staff':
+                header('Location: admin/staffIndex.php');
+                exit;
+            case 'student':
+                header('Location: index.php');
+                exit;
+            default:
+                // Optional: Redirect non-privileged users to a default page
+                header('Location: index.php');
+                exit;
+        }
+    } else {
+        $error_message = 'Invalid email or password.';
+    }
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -32,16 +70,22 @@
                 <h2 class="login-title">Sign In</h2>
                 <p class="login-subtitle">Welcome back to BCNHS</p>
 
+                <?php if (!empty($error_message)): ?>
+                    <div class="alert alert-danger" role="alert">
+                        <?php echo $error_message; ?>
+                    </div>
+                <?php endif; ?>
+
                 <!-- Login Form -->
-                <form action="#" method="POST" class="login-form">
+                <form action="login.php" method="POST" class="login-form">
                     <div class="form-group mb-3">
-                        <label for="username" class="form-label">Username or Email</label>
+                        <label for="email" class="form-label">Email</label>
                         <input 
-                            type="text" 
+                            type="email" 
                             class="form-control" 
-                            id="username" 
-                            name="username" 
-                            placeholder="Enter your username or email"
+                            id="email" 
+                            name="email" 
+                            placeholder="Enter your email"
                             required>
                     </div>
 

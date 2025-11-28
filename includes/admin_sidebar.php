@@ -8,7 +8,7 @@
     <nav class="admin-nav">
         <ul class="admin-nav-list">
             <li class="admin-nav-item">
-                <a href="index.php" class="admin-nav-link">
+                <a href="<?php echo (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'staff') ? 'staffIndex.php' : 'index.php'; ?>" class="admin-nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="3" width="7" height="7"></rect>
                         <rect x="14" y="3" width="7" height="7"></rect>
@@ -19,6 +19,7 @@
                 </a>
             </li>
 
+            <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
             <li class="admin-nav-item">
                 <a href="about.php" class="admin-nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -51,6 +52,18 @@
             </li>
 
             <li class="admin-nav-item">
+                <a href="users.php" class="admin-nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                        <circle cx="9" cy="7" r="4"></circle>
+                        <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                        <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                    </svg>
+                    <span>Manage Users</span>
+                </a>
+            </li>
+
+            <li class="admin-nav-item">
                 <a href="services.php" class="admin-nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                         <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
@@ -70,7 +83,9 @@
                     <span>Manage Learning Resources</span>
                 </a>
             </li>
+            <?php endif; ?>
 
+            <?php if (isset($_SESSION['user_role']) && ($_SESSION['user_role'] === 'admin' || $_SESSION['user_role'] === 'staff')): ?>
             <li class="admin-nav-item">
                 <a href="events.php" class="admin-nav-link">
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -100,6 +115,18 @@
                         <path d="M12 1v6m0 6v6M4.22 4.22l4.24 4.24m3.08 3.08l4.24 4.24M1 12h6m6 0h6m-16.78 7.78l4.24-4.24m3.08-3.08l4.24-4.24"></path>
                     </svg>
                     <span>Manage Achievements</span>
+                </a>
+            </li>
+            <?php endif; ?>
+
+            <li class="admin-nav-item">
+                <a href="../logout.php" class="admin-nav-link">
+                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                        <polyline points="16 17 21 12 16 7"></polyline>
+                        <line x1="21" y1="12" x2="9" y2="12"></line>
+                    </svg>
+                    <span>Logout</span>
                 </a>
             </li>
 

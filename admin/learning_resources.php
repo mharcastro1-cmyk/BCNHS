@@ -1,4 +1,12 @@
 <?php
+session_start();
+
+// Role-based access control
+if (!isset($_SESSION['user_role']) || !in_array($_SESSION['user_role'], ['admin', 'staff'])) {
+    header('Location: ../login.php');
+    exit;
+}
+
 include('../functions/functions.php');
 $resourcesModule = new ResourcesModule();
 $subjectModule = new SubjectModule();
