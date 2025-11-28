@@ -104,10 +104,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     <button type="submit" class="btn btn-primary w-100">Sign In</button>
                 </form>
 
-                <!-- Additional Links -->
-                <div class="login-footer">
-                    <a href="#" class="signup-link">Create account</a>
-                </div>
+                
             </div>
         </div>
     </main>
