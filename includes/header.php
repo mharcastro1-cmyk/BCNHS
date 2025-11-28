@@ -19,18 +19,22 @@
         <li class="nav-item">
           <a class="nav-link" href="/websys/BCNHS/about/">About Us</a>
         </li>
+        <?php if (isset($_SESSION['user_id'])): ?>
         <li class="nav-item">
           <a class="nav-link" href="/websys/BCNHS/faculties_staff/">Faculty and Staff</a>
         </li>
+        <?php endif; ?>
         <li class="nav-item">
           <a class="nav-link" href="/websys/BCNHS/curricula_programs/">Curricula and Programs</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="/websys/BCNHS/services/">Services</a>
         </li>
+        <?php if (isset($_SESSION['user_id'])): ?>
         <li class="nav-item">
           <a class="nav-link" href="/websys/BCNHS/learning_resources/">Learning Resources</a>
         </li>
+        <?php endif; ?>
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Academics</a>
           <div class="dropdown-menu">
@@ -41,9 +45,11 @@
             <a class="dropdown-item" href="#">More...</a>
           </div>
         </li>
+        <?php if (isset($_SESSION['user_id']) && isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin'): ?>
         <li class="nav-item">
           <a class="nav-link" href="/websys/BCNHS/admin/">Manage Site</a>
         </li>
+        <?php endif; ?>
         <li class="nav-item">
           <?php 
             if (isset($_SESSION['user_id'])) {
